@@ -1,3 +1,4 @@
+
 // init express
 const express = require('express')
 const app = express();
@@ -7,10 +8,15 @@ app.use(express.json())
 const mongoose = require('mongoose')
 const mongoUrl = "mongodb+srv://rhysindodev:eOR1HJsCqGsWzVO7@cluster0.mqk2f9r.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
+
+// Import Model
+require("./Model/userDetails")
+
+// Declare Model
+const User = mongoose.model("UserDetails")
+
 // Monggo Connection
-mongoose.connect(mongoUrl, {
-    useNewUrlParser: true,
-}).then(()=>{
+mongoose.connect(mongoUrl).then(()=>{
     console.log("Mongo Connected From Server")
 }).catch((e)=> console.log(e))
 
@@ -34,7 +40,21 @@ app.post("/post", async(req, res)=>{
     } catch (error) {
        res.send({status: "Something went wrong"})
     }
+})
 
- 
-
+// Adding Data
+app.post('/register', async (req, res)=> {
+    const {name, email , phone} = req.body
+    try{
+        await User.create({
+            uname: name,
+            email,
+            phoneNo: phone
+        })
+        res.send({ status: 'Data Added',
+                    name: name})
+    }
+    catch(e){
+        res.send(e)
+    }
 })
