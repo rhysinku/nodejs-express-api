@@ -5,9 +5,12 @@ function App() {
  
   return (
     <>
-    <div>
+    <div className="h-screen flex items-center content-center">
+    <div className="container">
       <RegisterCard/>
     </div>
+    </div>
+  
     
     </>
   )
