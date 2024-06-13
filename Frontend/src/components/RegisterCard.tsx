@@ -1,6 +1,35 @@
+import { ChangeEvent , FormEvent, useState } from "react"
 
 
-function RegisterCard() {
+interface FormDataType {
+  username: string
+  email: string
+  password: string
+}
+
+const RegisterCard:React.FC = () => {
+
+      const [formData , setFormData] = useState<FormDataType>({
+        username: '',
+        email:'',
+        password: ''
+      })
+
+      const handleChange = (event : ChangeEvent<HTMLInputElement>) => {
+       const {name , value} = event.target;
+
+       setFormData({
+        ...formData,
+        [name]: value
+       })
+      }
+
+      const handleSubmit = (event : FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        console.log(formData)
+      }
+
+
   return (
     <>
     <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
@@ -9,11 +38,18 @@ function RegisterCard() {
     <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Create your account</h2>
   </div>
   <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-    <form className="space-y-6" action="#" method="POST">
+    <form className="space-y-6" action="#" method="POST" onSubmit={handleSubmit}>
       <div>
         <label  className="block text-sm font-medium leading-6 text-gray-900">User Name</label>
         <div className="mt-2">
-          <input id="username" name="username" type="text"  required className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
+          <input id="username" name="username" type="text" onChange={handleChange}  required className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
+        </div>
+      </div>
+
+      <div>
+        <label  className="block text-sm font-medium leading-6 text-gray-900">Email Address</label>
+        <div className="mt-2">
+          <input id="email" name="email" type="email" onChange={handleChange}  required className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
         </div>
       </div>
 
@@ -25,7 +61,7 @@ function RegisterCard() {
           </div>
         </div>
         <div className="mt-2">
-          <input id="password" name="password" type="password"  required className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
+          <input id="password" name="password" type="password" onChange={handleChange}  required className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
         </div>
       </div>
 
