@@ -1,11 +1,14 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const UserDetailsSchema = new mongoose.Schema({
+const UserDetailsSchema = new mongoose.Schema(
+  {
     uname: String,
-    email: String,
-    phoneNo: String
-},{
-    collection: 'UserDetails'
-});
+    email: { type: String, unique: true },
+    password: String,
+  },
+  {
+    collection: "UserDetails",
+  }
+);
 
 mongoose.model("UserDetails", UserDetailsSchema);
