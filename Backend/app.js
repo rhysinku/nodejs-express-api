@@ -2,8 +2,13 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
+const jwt = require("jsonwebtoken");
 app.use(express.json());
 app.use(cors());
+
+// init jwt
+const JWT_SECRET =
+  "pockeypeperoaj==12i3uppupsaudioahsdjnzpkmcdknhbv210312ie9qwusiadjlncshdbasgdcnahsxjkdsadma";
 
 // init Mongo
 const mongoose = require("mongoose");
@@ -29,7 +34,7 @@ app.listen(1234, () => {
   console.log("Server is started: Port: 1234");
 });
 
-// Adding Data
+// Register User
 app.post("/register", async (req, res) => {
   const { uname, email, password } = req.body;
 
@@ -48,5 +53,31 @@ app.post("/register", async (req, res) => {
     res.send({ status: "Data Added" });
   } catch (error) {
     res.send(error);
+  }
+});
+
+app.post("/login", async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.send({ status: "No User Found" });
+    }
+
+    if (password === user.password) {
+      const accToken = jwt.sign({}, JWT_SECRET);
+
+      if (res.status(200)) {
+        return res.send({ status: "Account Login", accToken });
+      } else {
+        return res.send({
+          status: "Incorrect Details",
+          accToken,
+        });
+      }
+    }
+  } catch (error) {
+    return res.send(error);
   }
 });
