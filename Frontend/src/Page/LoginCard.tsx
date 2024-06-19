@@ -18,14 +18,27 @@ const LoginCard: React.FC = () => {
       ...loginData,
       [name]: value,
     });
-
-    console.log(loginData);
   };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const { email, password } = loginData;
 
-    console.log(loginData);
+    fetch("http://localhost:1234/login", {
+      method: "Post",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({
+        email,
+        password,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+      });
   };
 
   return (
