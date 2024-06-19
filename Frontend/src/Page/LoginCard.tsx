@@ -1,4 +1,33 @@
-function LoginCard() {
+import { ChangeEvent, FormEvent, useState } from "react";
+
+interface LoginDataType {
+  email: string;
+  password: string;
+}
+
+const LoginCard: React.FC = () => {
+  const [loginData, setLoginData] = useState<LoginDataType>({
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+
+    setLoginData({
+      ...loginData,
+      [name]: value,
+    });
+
+    console.log(loginData);
+  };
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    console.log(loginData);
+  };
+
   return (
     <>
       <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
@@ -13,7 +42,7 @@ function LoginCard() {
           </h2>
         </div>
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" action="#" method="POST">
+          <form className="space-y-6" onSubmit={handleSubmit} method="POST">
             <div>
               <label className="block text-sm font-medium leading-6 text-gray-900">
                 Email address
@@ -23,6 +52,7 @@ function LoginCard() {
                   id="email"
                   name="email"
                   type="email"
+                  onChange={handleChange}
                   required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
@@ -48,6 +78,7 @@ function LoginCard() {
                   id="password"
                   name="password"
                   type="password"
+                  onChange={handleChange}
                   required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
@@ -77,6 +108,6 @@ function LoginCard() {
       </div>
     </>
   );
-}
+};
 
 export default LoginCard;
