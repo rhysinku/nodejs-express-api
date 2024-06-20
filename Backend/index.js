@@ -1,8 +1,10 @@
 // Import Required
-const express = require("express");
-const jwt = require("jsonwebtoken");
-const cors = require("cors");
-const mongoose = require("mongoose");
+import express  from "express";
+import jwt  from "jsonwebtoken";
+import cors  from "cors";
+import mongoose  from "mongoose";
+
+import User from "./Model/userDetails.js";
 
 
 // Declare Required
@@ -22,14 +24,14 @@ const mongoUrl =
   "mongodb+srv://rhysindodev:eOR1HJsCqGsWzVO7@cluster0.mqk2f9r.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
 // Import Model
-require("./Model/userDetails");
+// require("./Model/userDetails");
 
 // Declare Model
-const User = mongoose.model("UserDetails");
+// const User = mongoose.model("UserDetails");
 
 // Monggo Connection
 mongoose
-  .connect(mongoUrl)
+  .connect(mongoUrl )
   .then(() => {
     console.log("Mongo Connected From Server");
   })
