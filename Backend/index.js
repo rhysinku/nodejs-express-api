@@ -1,17 +1,23 @@
-// init express
+// Import Required
 const express = require("express");
-const app = express();
-const cors = require("cors");
 const jwt = require("jsonwebtoken");
+const cors = require("cors");
+const mongoose = require("mongoose");
+
+
+// Declare Required
+const app = express();
+
+// Use Required
 app.use(express.json());
 app.use(cors());
 
-// init jwt
+
+// jwt Secret
 const JWT_SECRET =
   "pockeypeperoaj==12i3uppupsaudioahsdjnzpkmcdknhbv210312ie9qwusiadjlncshdbasgdcnahsxjkdsadma";
 
-// init Mongo
-const mongoose = require("mongoose");
+// Mongo Url
 const mongoUrl =
   "mongodb+srv://rhysindodev:eOR1HJsCqGsWzVO7@cluster0.mqk2f9r.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 

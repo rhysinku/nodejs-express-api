@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node app.js"
+    "nodemon": "nodemon index.js",
+    "prod": "node app.js"
   },
   "author": "pockeypepero",
   "license": "ISC",
