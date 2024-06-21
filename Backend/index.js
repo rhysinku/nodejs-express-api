@@ -3,6 +3,7 @@ import express  from "express";
 import cors  from "cors";
 import mongoose  from "mongoose";
 import userRoute from "./Routes/user.route.js";
+import authRoute from "./Routes/auth.route.js";
 
 
 // Declare Required
@@ -44,3 +45,4 @@ app.listen(1234, () => {
 
 
 app.use("/api/user", userRoute);
+app.use("/api/auth", authRoute);
