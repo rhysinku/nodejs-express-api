@@ -19,7 +19,7 @@ const JWT_SECRET =
 
 // Mongo Url
 const mongoUrl =
-  "mongodb+srv://rhysindodev:eOR1HJsCqGsWzVO7@cluster0.mqk2f9r.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+  "mongodb+srv://rhysindodev:eOR1HJsCqGsWzVO7@cluster0.mqk2f9r.mongodb.net/mern-auth?retryWrites=true&w=majority&appName=Cluster0";
 
 // Import Model
 // require("./Model/userDetails");

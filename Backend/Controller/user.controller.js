@@ -3,7 +3,7 @@ import User from "../Model/userDetails.model.js";
 import jwt  from "jsonwebtoken";
 
 export const test = (req, res) => {
-    res.json({
+    res.send({
         message : "Working API"
     })
 }
