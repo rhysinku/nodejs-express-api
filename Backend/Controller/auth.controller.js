@@ -1,13 +1,14 @@
 import User from "../Model/userDetails.model.js";
 import bcryptjs from "bcryptjs";
+import { errorHandler } from "../Utils/error.js";
 
-export const register = async (req, res) => {
+export const register = async (req, res , next) => {
     const {uname , email, password} = req.body;
     const hashPassword = bcryptjs.hashSync(password , 10) 
     try {
         const emailExist = await User.findOne({email})
         if(emailExist){
-            return res.send({status: "Email Existed"})
+          next(errorHandler(500, "Oh no, Email Exist"))
         }
 
         await User.create({
@@ -21,7 +22,7 @@ export const register = async (req, res) => {
 
     }
     catch(error){
-        res.send(error)
+      next(errorHandler(500, "Oh no, something went wrong"))
     }
 }
 
