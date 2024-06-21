@@ -3,8 +3,9 @@ import express  from "express";
 import jwt  from "jsonwebtoken";
 import cors  from "cors";
 import mongoose  from "mongoose";
+import userRoute from "./Routes/user.route.js";
 
-import User from "./Model/userDetails.js";
+import User from "./Model/userDetails.model.js";
 
 
 // Declare Required
@@ -88,3 +89,7 @@ app.post("/login", async (req, res) => {
     return res.send(error);
   }
 });
+
+
+
+app.use("/api/user", userRoute);
