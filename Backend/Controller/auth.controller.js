@@ -1,6 +1,12 @@
 import User from "../Model/userDetails.model.js";
 import bcryptjs from "bcryptjs";
+import jwt from "jsonwebtoken";
 import { errorHandler } from "../Utils/error.js";
+
+
+// jwt Secret
+const JWT_SECRET =
+  "pockeypeperoaj==12i3uppupsaudioahsdjnzpkmcdknhbv210312ie9qwusiadjlncshdbasgdcnahsxjkdsadma";
 
 export const register = async (req, res , next) => {
     const {uname , email, password} = req.body;
@@ -8,7 +14,7 @@ export const register = async (req, res , next) => {
     try {
         const emailExist = await User.findOne({email})
         if(emailExist){
-          next(errorHandler(500, "Email Exist"))
+          next(errorHandler(401, "Email Exist"))
         }
 
         await User.create({
@@ -22,32 +28,30 @@ export const register = async (req, res , next) => {
 
     }
     catch(error){
-      next(errorHandler(500, "Oh no, something went wrong"))
-    }
+      next(error)
+    } 
 }
 
-export const login = async (req, res) => {
+export const login = async (req, res, next) => {
     const { email, password } = req.body;
   
     try {
       const user = await User.findOne({ email });
       if (!user) {
-        return res.send({ status: "No User Found" });
+        next(errorHandler(401, "No User Found"))
       }
   
-      if (password === user.password) {
-        const accToken = jwt.sign({}, JWT_SECRET);
-  
+      if (bcryptjs.compareSync(password, user.password)) {
+        const accToken = jwt.sign({id : user._id}, JWT_SECRET);
+        const { password , ...rest} = user._doc
         if (res.status(200)) {
-          return res.send({ status: "Account Login", accToken });
+          res.cookie("access_token" , accToken,{ httpOnly: true}).status(200).json(rest)
+          
         } else {
-          return res.send({
-            status: "Incorrect Details",
-            accToken,
-          });
+          next(errorHandler(401, "Invalid Creditial"))
         }
       }
     } catch (error) {
-      return res.send(error);
+      next(error)
     }
   }
