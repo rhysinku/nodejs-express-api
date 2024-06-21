@@ -47,14 +47,13 @@ app.post("/register", async (req, res) => {
   const { uname, email, password } = req.body;
 
   try {
-    const emailExist = User.find({ email });
-
-    if (emailExist) {
+    const emailExist = await User.find({ email });
+    if (!emailExist) {
       return res.send({ status: "Email already exists" });
     }
 
     await User.create({
-      uname,
+      username : uname,
       email,
       password,
     });
