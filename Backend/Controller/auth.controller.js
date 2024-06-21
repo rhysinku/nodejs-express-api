@@ -1,8 +1,9 @@
 import User from "../Model/userDetails.model.js";
-
+import bcryptjs from "bcryptjs";
 
 export const register = async (req, res) => {
     const {uname , email, password} = req.body;
+    const hashPassword = bcryptjs.hashSync(password , 10) 
     try {
         const emailExist = await User.findOne({email})
         if(emailExist){
@@ -12,7 +13,7 @@ export const register = async (req, res) => {
         await User.create({
             username: uname,
             email,
-            password,
+            password : hashPassword,
         })
         res.send({
             status : "Account Register",
