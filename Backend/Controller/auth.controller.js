@@ -8,7 +8,7 @@ export const register = async (req, res , next) => {
     try {
         const emailExist = await User.findOne({email})
         if(emailExist){
-          next(errorHandler(500, "Oh no, Email Exist"))
+          next(errorHandler(500, "Email Exist"))
         }
 
         await User.create({
@@ -25,8 +25,6 @@ export const register = async (req, res , next) => {
       next(errorHandler(500, "Oh no, something went wrong"))
     }
 }
-
-
 
 export const login = async (req, res) => {
     const { email, password } = req.body;

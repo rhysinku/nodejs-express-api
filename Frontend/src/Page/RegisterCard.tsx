@@ -26,7 +26,7 @@ const RegisterCard: React.FC = () => {
     event.preventDefault();
     const { username, email, password } = formData;
 
-    fetch("http://localhost:1234/register", {
+    fetch("http://localhost:1234/api/auth/register", {
       method: "POST",
 
       headers: {
