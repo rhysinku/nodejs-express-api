@@ -8,8 +8,7 @@ const UserDetailsSchema = new mongoose.Schema(
     },
     email: { type: String, unique: true },
     password: String,
-  },
-  {
+  },{timestamps:true,
     collection: "UserDetails",
   }
 );
