@@ -1,6 +1,13 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
+import {
+  signInFailure,
+  signInStart,
+  signInSuccess,
+} from "../redux/user/userSlice";
+import { useDispatch } from "react-redux";
+
 interface LoginDataType {
   email: string;
   password: string;
@@ -15,6 +22,7 @@ const LoginCard: React.FC = () => {
   const [isLoading, setisLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
 
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -32,6 +40,7 @@ const LoginCard: React.FC = () => {
     const { email, password } = loginData;
 
     try {
+      dispatch(signInStart());
       const res = await fetch("http://localhost:1234/api/auth/login", {
         method: "Post",
         headers: {
@@ -45,22 +54,21 @@ const LoginCard: React.FC = () => {
       });
 
       const data = await res.json();
-
+      console.log(data);
       if (data.success == false) {
         setError("Incorrect Creditials");
         setisLoading(false);
+        dispatch(signInFailure("Incorrect Creditials"));
         return;
       }
-
       setisLoading(false);
       setError("");
+      dispatch(signInSuccess(data));
       navigate("/");
-      return;
     } catch (error) {
       setError("Network Error");
       setisLoading(false);
-      console.log(error);
-      return;
+      dispatch(signInFailure("Network Error"));
     }
   };
 
