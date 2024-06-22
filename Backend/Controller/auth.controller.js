@@ -55,6 +55,7 @@ export const login = async (req, res, next) => {
         next(errorHandler(401, "Invalid Creditial"));
       }
     }
+    next(errorHandler(401, "Invalid Wrong Password"));
   } catch (error) {
     next(error);
   }
