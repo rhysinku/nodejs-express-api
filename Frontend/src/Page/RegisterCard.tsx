@@ -1,4 +1,5 @@
 import { ChangeEvent, FormEvent, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 interface FormDataType {
   username: string;
@@ -13,20 +14,24 @@ const RegisterCard: React.FC = () => {
     password: "",
   });
 
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
+
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
-
     setFormData({
       ...formData,
       [name]: value,
     });
   };
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setIsLoading(true);
     const { username, email, password } = formData;
 
-    fetch("http://localhost:1234/api/auth/register", {
+    const res = await fetch("http://localhost:1234/api/auth/register", {
       method: "POST",
 
       headers: {
@@ -38,17 +43,24 @@ const RegisterCard: React.FC = () => {
         email,
         password,
       }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-      });
+    });
 
-      setFormData({
-        username: "",
-        email: "",
-        password: "",
-      })
+    const data = await res.json();
+
+    if (data.success === false) {
+      setError(data.message);
+      setIsLoading(false);
+      return;
+    }
+    setIsLoading(false);
+    setError("");
+    setFormData({
+      username: "",
+      email: "",
+      password: "",
+    });
+
+    navigate("/login");
   };
 
   return (
@@ -110,7 +122,6 @@ const RegisterCard: React.FC = () => {
                 <label className="block text-sm font-medium leading-6 text-gray-900">
                   Password
                 </label>
-
               </div>
               <div className="mt-2">
                 <input
@@ -130,11 +141,21 @@ const RegisterCard: React.FC = () => {
                 type="submit"
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-                Login
+                {isLoading ? "Loading..." : "Sign Up"}
               </button>
             </div>
+            {error && <p className="text-red-500">{error}</p>}
           </form>
         </div>
+        <p className="text-center mt-2 text-sm text-gray-500">
+          Already have an account?{" "}
+          <Link
+            to="/login"
+            className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+          >
+            Login
+          </Link>
+        </p>
       </div>
     </>
   );

@@ -1,4 +1,5 @@
 import { ChangeEvent, FormEvent, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 interface LoginDataType {
   email: string;
@@ -11,6 +12,11 @@ const LoginCard: React.FC = () => {
     password: "",
   });
 
+  const [isLoading, setisLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
+
+  const navigate = useNavigate();
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
@@ -20,25 +26,42 @@ const LoginCard: React.FC = () => {
     });
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setisLoading(true);
     const { email, password } = loginData;
 
-    fetch("http://localhost:1234/login", {
-      method: "Post",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      body: JSON.stringify({
-        email,
-        password,
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
+    try {
+      const res = await fetch("http://localhost:1234/api/auth/login", {
+        method: "Post",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
       });
+
+      const data = await res.json();
+
+      if (data.success == false) {
+        setError("Incorrect Creditials");
+        setisLoading(false);
+        return;
+      }
+
+      setisLoading(false);
+      setError("");
+      navigate("/");
+      return;
+    } catch (error) {
+      setError("Network Error");
+      setisLoading(false);
+      console.log(error);
+      return;
+    }
   };
 
   return (
@@ -103,19 +126,20 @@ const LoginCard: React.FC = () => {
                 type="submit"
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-                Sign in
+                {isLoading ? " Loading..." : "Submit"}
               </button>
             </div>
+            {error && <p className="text-red-500">{error}</p>}
           </form>
 
           <p className="mt-10 text-center text-sm text-gray-500">
             Not a member?
-            <a
-              href="#"
+            <Link
+              to="/register"
               className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
             >
-              Start a 14 day free trial
-            </a>
+              Register Here
+            </Link>
           </p>
         </div>
       </div>
