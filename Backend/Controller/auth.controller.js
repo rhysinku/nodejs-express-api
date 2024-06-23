@@ -13,7 +13,7 @@ export const register = async (req, res, next) => {
   try {
     const emailExist = await User.findOne({ email });
     if (emailExist) {
-      next(errorHandler(401, "Email Exist"));
+      return next(errorHandler(401, "Email Exist"));
     }
 
     await User.create({
@@ -25,7 +25,7 @@ export const register = async (req, res, next) => {
       status: "Account Register",
     });
   } catch (error) {
-    next(error);
+    return next(error);
   }
 };
 
@@ -35,7 +35,7 @@ export const login = async (req, res, next) => {
   try {
     const user = await User.findOne({ email });
     if (!user) {
-      next(errorHandler(401, "No User Found"));
+      return next(errorHandler(401, "No User Found"));
     }
 
     if (bcryptjs.compareSync(password, user.password)) {
@@ -43,20 +43,17 @@ export const login = async (req, res, next) => {
       const { password, ...rest } = user._doc;
 
       const expiryDate = new Date(Date.now() + 35000);
-      if (res.status(200)) {
-        res
-          .cookie("access_token", accToken, {
-            httpOnly: true,
-            expires: expiryDate,
-          })
-          .status(200)
-          .json(rest);
-      } else {
-        next(errorHandler(401, "Invalid Creditial"));
-      }
+
+      return res
+        .cookie("access_token", accToken, {
+          httpOnly: true,
+          expires: expiryDate,
+        })
+        .status(200)
+        .send(rest);
     }
-    next(errorHandler(401, "Invalid Wrong Password"));
+    return next(errorHandler(401, "Invalid Wrong Password"));
   } catch (error) {
-    next(error);
+    return next(error);
   }
 };

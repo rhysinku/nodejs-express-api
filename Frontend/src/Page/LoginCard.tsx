@@ -58,7 +58,7 @@ const LoginCard: React.FC = () => {
       if (data.success == false) {
         setError("Incorrect Creditials");
         setisLoading(false);
-        dispatch(signInFailure("Incorrect Creditials"));
+        dispatch(signInFailure(data));
         return;
       }
       setisLoading(false);
@@ -68,7 +68,7 @@ const LoginCard: React.FC = () => {
     } catch (error) {
       setError("Network Error");
       setisLoading(false);
-      dispatch(signInFailure("Network Error"));
+      dispatch(signInFailure(error));
     }
   };
 
