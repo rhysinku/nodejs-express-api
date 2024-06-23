@@ -6,7 +6,7 @@ import {
   signInStart,
   signInSuccess,
 } from "../redux/user/userSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 interface LoginDataType {
   email: string;
@@ -19,9 +19,7 @@ const LoginCard: React.FC = () => {
     password: "",
   });
 
-  const [isLoading, setisLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string>("");
-
+  const { loading, error } = useSelector((state: any) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -36,7 +34,7 @@ const LoginCard: React.FC = () => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setisLoading(true);
+
     const { email, password } = loginData;
 
     try {
@@ -56,18 +54,13 @@ const LoginCard: React.FC = () => {
       const data = await res.json();
       console.log(data);
       if (data.success == false) {
-        setError("Incorrect Creditials");
-        setisLoading(false);
-        dispatch(signInFailure(data));
+        dispatch(signInFailure(data.message));
         return;
       }
-      setisLoading(false);
-      setError("");
+
       dispatch(signInSuccess(data));
       navigate("/");
     } catch (error) {
-      setError("Network Error");
-      setisLoading(false);
       dispatch(signInFailure(error));
     }
   };
@@ -134,7 +127,7 @@ const LoginCard: React.FC = () => {
                 type="submit"
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-                {isLoading ? " Loading..." : "Submit"}
+                Submit
               </button>
             </div>
             {error && <p className="text-red-500">{error}</p>}
