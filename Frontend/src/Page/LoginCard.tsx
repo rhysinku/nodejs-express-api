@@ -7,6 +7,7 @@ import {
   signInSuccess,
 } from "../redux/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../redux/store";
 
 interface LoginDataType {
   email: string;
@@ -19,8 +20,8 @@ const LoginCard: React.FC = () => {
     password: "",
   });
 
-  const { loading, error } = useSelector((state: any) => state.user);
-  const dispatch = useDispatch();
+  const { loading, error } = useSelector((state: RootState) => state.user);
+  const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -52,7 +53,7 @@ const LoginCard: React.FC = () => {
       });
 
       const data = await res.json();
-      console.log(data);
+
       if (data.success == false) {
         dispatch(signInFailure(data.message));
         return;
@@ -127,7 +128,7 @@ const LoginCard: React.FC = () => {
                 type="submit"
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-                Submit
+                {loading ? "Loading..." : "Submit"}
               </button>
             </div>
             {error && <p className="text-red-500">{error}</p>}

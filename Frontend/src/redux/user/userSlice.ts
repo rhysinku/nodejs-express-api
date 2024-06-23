@@ -1,9 +1,26 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-const initialState = {
+interface UserState {
+  currentUser: UserData | null;
+  loading: boolean;
+  error: string | boolean;
+  counter: number;
+}
+
+interface UserData {
+  _id: string;
+  username: string;
+  email: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
+
+const initialState: UserState = {
   currentUser: null,
   loading: false,
   error: false,
+  counter: 0,
 };
 
 const userSlice = createSlice({
@@ -13,7 +30,7 @@ const userSlice = createSlice({
     signInStart: (state) => {
       state.loading = true;
     },
-    signInSuccess: (state, action) => {
+    signInSuccess: (state, action: PayloadAction<UserData>) => {
       state.currentUser = action.payload;
       state.loading = false;
       state.error = false;

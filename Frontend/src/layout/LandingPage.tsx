@@ -8,8 +8,7 @@ export default function LandingPage() {
         <img src="rain-before.jpg" alt="" />
         <Navigation />
       </div>
-      <div className="h-screen flex items-center content-center">
-        Hello
+      <div className="h-screen flex items-center content-center flex-col">
         <div className="container">
           <Outlet />
         </div>
