@@ -57,3 +57,9 @@ export const login = async (req, res, next) => {
     return next(error);
   }
 };
+
+
+
+export const googleAuth = async (req , res) =>{
+
+}
