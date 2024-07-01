@@ -8,6 +8,7 @@ import {
 } from "../redux/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../redux/store";
+import GAuth from "../components/GAuth";
 
 interface LoginDataType {
   email: string;
@@ -131,7 +132,10 @@ const LoginCard: React.FC = () => {
                 {loading ? "Loading..." : "Submit"}
               </button>
             </div>
+            <GAuth/>
             {error && <p className="text-red-500">{error}</p>}
+
+         
           </form>
 
           <p className="mt-10 text-center text-sm text-gray-500">

@@ -1,5 +1,6 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import GAuth from "../components/GAuth";
 
 interface FormDataType {
   username: string;
@@ -144,6 +145,7 @@ const RegisterCard: React.FC = () => {
                 {isLoading ? "Loading..." : "Sign Up"}
               </button>
             </div>
+            <GAuth/>
             {error && <p className="text-red-500">{error}</p>}
           </form>
         </div>

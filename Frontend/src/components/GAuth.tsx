@@ -1,9 +1,9 @@
 function GAuth() {
   return (
-    <a className="">
+    <button type="button" className="text-center bg-red-600 text-white w-full py-3 block rounded-sm hover:bg-red-400">
        Continue With Google 
-    </a>
+    </button>
   )
-}
+} 
 
 export default GAuth
