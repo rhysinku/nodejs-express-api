@@ -1,9 +1,11 @@
 import { FormEvent } from "react";
 import { GoogleAuthProvider, signInWithPopup ,getAuth } from "firebase/auth"
 import { app } from "../firebase";
+import { useDispatch } from "react-redux";
+import { signInSuccess } from "../redux/user/userSlice";
 
-function GAuth() {
-
+const  GAuth:React.FC = () => {
+  const dispatch = useDispatch();
   const handleGoogleClick = async(e:FormEvent<HTMLButtonElement>)=>{
     e.preventDefault();
     try{
@@ -24,6 +26,8 @@ function GAuth() {
           photo : photoURL
         })
       })
+      const data = await res.json()
+      dispatch(signInSuccess(data))
   
     }catch(error){ 
       console.log(error)
