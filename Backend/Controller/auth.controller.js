@@ -60,6 +60,28 @@ export const login = async (req, res, next) => {
 
 
 
-export const googleAuth = async (req , res) =>{
+export const googleAuth = async (req , res , next) =>{
+try{
+  const {email} = req.body
 
+  const user = await User.findOne({email})
+
+  if(user){
+    const accToken = jwt.sign({id: user.id}, JWT_SECRET);
+    const {password, ...rest} = user._doc;
+    const expiryDate = new Date(Date.now() + 35000);
+    return res.cookie("access_token" , accToken, {
+      httpOnly: true,
+      expire: expiryDate
+    }).status(200).send(rest)
+  }else{
+    return next(errorHandler(401 , "No Google Email Found"))
+  }
+
+ 
+
+
+}catch(error){
+  return next(errorHandler(401 , "Google Auth Failed"))
+}
 }
