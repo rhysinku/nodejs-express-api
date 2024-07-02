@@ -62,7 +62,7 @@ export const login = async (req, res, next) => {
 
 export const googleAuth = async (req , res , next) =>{
 try{
-  const {email} = req.body
+  const {name, email , photo} = req.body
 
   const user = await User.findOne({email})
 
@@ -75,11 +75,23 @@ try{
       expire: expiryDate
     }).status(200).send(rest)
   }else{
-    return next(errorHandler(401 , "No Google Email Found"))
+    const generatePassword = Math.random().toString(36).slice(-8)
+    const hashPassword = bcryptjs.hashSync(generatePassword, 10)
+    const googleUsername = name.split(" ").join("").toLowerCase() + Math.floor(Math.random * 10000)
+    const expiryDate = new Date(Date.now() + 35000)
+    const googleUser = new User({
+      username: googleUsername,
+      email,
+      password: hashPassword,
+      profilePicture: photo
+    })
+
+    await googleUser.save()
+    const accToken = jwt.sign({id: googleUser._id}, JWT_SECRET)
+
+    return res.cookie("access_token" , accToken, {httpOnly:true, expire: expiryDate}).status(200).send(googleUser)
+   
   }
-
- 
-
 
 }catch(error){
   return next(errorHandler(401 , "Google Auth Failed"))
