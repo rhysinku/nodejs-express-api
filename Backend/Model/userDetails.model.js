@@ -7,7 +7,14 @@ const UserDetailsSchema = new mongoose.Schema(
       required: true
     },
     email: { type: String, unique: true , required: true },
-    password: String,
+    password: {
+      type: String,
+      required: true
+    },
+    profilePicture :{
+      type: String,
+      default: `https://picsum.photos/300/300?random`
+    }
   },{timestamps:true,
     collection: "UserDetails",
   }
