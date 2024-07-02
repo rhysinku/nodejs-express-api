@@ -15,7 +15,7 @@ const  GAuth:React.FC = () => {
    
 
       const { displayName, email, photoURL } = result.user
-      const res = await fetch('api/auth/google', {
+      const res = await fetch('http://localhost:1234/api/auth/google', {
         method: 'POST',
         headers:{
           'Content-Type' : 'application/json'
