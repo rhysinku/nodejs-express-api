@@ -73,12 +73,18 @@ try{
     return res.cookie("access_token" , accToken, {
       httpOnly: true,
       expire: expiryDate
-    }).status(200).send(rest)
+    }).status(200).send({
+      Data : rest,
+      message : "Email Found"
+    })
   }else{
+  
+
     const generatePassword = Math.random().toString(36).slice(-8)
     const hashPassword = bcryptjs.hashSync(generatePassword, 10)
-    const googleUsername = name.split(" ").join("").toLowerCase() + Math.floor(Math.random * 10000)
+    const googleUsername = name.split(" ").join("").toLowerCase() + Math.floor(Math.random() * 10000)
     const expiryDate = new Date(Date.now() + 35000)
+    
     const googleUser = new User({
       username: googleUsername,
       email,
@@ -89,7 +95,10 @@ try{
     await googleUser.save()
     const accToken = jwt.sign({id: googleUser._id}, JWT_SECRET)
 
-    return res.cookie("access_token" , accToken, {httpOnly:true, expire: expiryDate}).status(200).send(googleUser)
+    return res.cookie("access_token" , accToken, {httpOnly:true, expire: expiryDate}).status(200).send({
+      Data : googleUser,
+      message : "Google Account Created"
+    })
    
   }
 
