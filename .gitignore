@@ -2,3 +2,5 @@
 node_modules
 
 *.min.*
+
+# new SSH Key
