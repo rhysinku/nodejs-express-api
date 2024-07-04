@@ -1,6 +1,12 @@
 import { NavLink } from "react-router-dom";
+import {  RootState } from "../redux/store";
+import { useSelector } from "react-redux";
 
-function Navigation() {
+const Navigation: React.FC = () => {
+
+  const { currentUser } = useSelector((state: RootState) => state.user)
+
+console.log(currentUser)
   return (
     <>
       <header className="py-3">
@@ -12,6 +18,7 @@ function Navigation() {
             <NavLink to="/login">Login</NavLink>
             <NavLink to="/register">Register</NavLink>
           </nav>
+  
         </div>
       </header>
     </>
