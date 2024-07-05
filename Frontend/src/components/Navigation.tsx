@@ -13,7 +13,7 @@ const Navigation: React.FC = () => {
             <NavLink to="/">ProfileDB</NavLink>
           </h1>
           {
-            currentUser ? <img src={currentUser.profilePicture}></img> : 
+            currentUser ? <img src={currentUser.profilePicture} alt={currentUser.username}></img> : 
             <nav className="flex gap-2">
             <NavLink to="/login">Login</NavLink>
             <NavLink to="/register">Register</NavLink>

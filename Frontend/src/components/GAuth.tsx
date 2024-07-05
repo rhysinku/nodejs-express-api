@@ -3,9 +3,12 @@ import { GoogleAuthProvider, signInWithPopup ,getAuth } from "firebase/auth"
 import { app } from "../firebase";
 import { useDispatch } from "react-redux";
 import { signInSuccess } from "../redux/user/userSlice";
+import { useNavigate } from "react-router-dom";
 
 const  GAuth:React.FC = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const handleGoogleClick = async(e:FormEvent<HTMLButtonElement>)=>{
     e.preventDefault();
     try{
@@ -29,7 +32,7 @@ const  GAuth:React.FC = () => {
       })
       const data = await res.json()
       dispatch(signInSuccess(data))
-  
+      navigate('/profile')
     }catch(error){ 
       console.log(error)
     }

@@ -8,6 +8,8 @@ import {
 import LandingPage from "./layout/LandingPage";
 import RegisterCard from "./Page/RegisterCard";
 import LoginCard from "./Page/LoginCard";
+import PrivateRoute from "./layout/PrivateRoute";
+import Profile from "./Page/Profile";
 
 function App() {
   const navRouter = createBrowserRouter(
@@ -15,6 +17,10 @@ function App() {
       <Route path="/" element={<LandingPage />}>
         <Route path="register" element={<RegisterCard />} />
         <Route path="login" element={<LoginCard />} />
+
+        <Route element={ <PrivateRoute/>}>
+          <Route path="/profile" element={<Profile />} />
+        </Route>
       </Route>
     )
   );
