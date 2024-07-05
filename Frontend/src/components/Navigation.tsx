@@ -13,7 +13,7 @@ const Navigation: React.FC = () => {
             <NavLink to="/">ThisMe App</NavLink>
           </h1>
           {
-            currentUser ? <Link to='/profile'><img className="rounded-full overflow-hidden" src={currentUser.profilePicture} alt={currentUser.username}></img></Link> : 
+            currentUser ? <Link to='/profile'><img className="max-w-20 aspect-square object-fill w-full rounded-full overflow-hidden" src={currentUser.profilePicture} alt={currentUser.username}></img></Link> : 
             <nav className="flex gap-2">
             <NavLink to="/login">Login</NavLink>
             <NavLink to="/register">Register</NavLink>
