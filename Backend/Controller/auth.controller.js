@@ -73,10 +73,7 @@ try{
     return res.cookie("access_token" , accToken, {
       httpOnly: true,
       expire: expiryDate
-    }).status(200).send({
-      Data : rest,
-      message : "Email Found"
-    })
+    }).status(200).send(rest)
   }else{
   
 
@@ -95,10 +92,7 @@ try{
     await googleUser.save()
     const accToken = jwt.sign({id: googleUser._id}, JWT_SECRET)
 
-    return res.cookie("access_token" , accToken, {httpOnly:true, expire: expiryDate}).status(200).send({
-      Data : googleUser,
-      message : "Google Account Created"
-    })
+    return res.cookie("access_token" , accToken, {httpOnly:true, expire: expiryDate}).status(200).send(googleUser)
    
   }
 

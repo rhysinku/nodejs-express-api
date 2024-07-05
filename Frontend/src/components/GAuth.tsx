@@ -18,7 +18,8 @@ const  GAuth:React.FC = () => {
       const res = await fetch('http://localhost:1234/api/auth/google', {
         method: 'POST',
         headers:{
-          'Content-Type' : 'application/json'
+          'Content-Type' : 'application/json',
+          Accept: "application/json",
         },
         body: JSON.stringify({
           name : displayName,
