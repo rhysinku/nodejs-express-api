@@ -8,8 +8,8 @@ export default function LandingPage() {
         <img src="rain-before.jpg" alt="" />
         <Navigation />
       </div>
-      <div className="h-screen flex items-center content-center flex-col">
-        <div className="container">
+      <div className="h-[calc(100vh-120px)] flex items-center content-center flex-col">
+        <div className="container h-full">
           <Outlet />
         </div>
       </div>

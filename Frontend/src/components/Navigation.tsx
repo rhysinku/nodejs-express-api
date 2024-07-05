@@ -10,10 +10,10 @@ const Navigation: React.FC = () => {
       <header className="py-3">
         <div className="flex justify-between items-center">
           <h1>
-            <NavLink to="/">ProfileDB</NavLink>
+            <NavLink to="/">ThisMe App</NavLink>
           </h1>
           {
-            currentUser ? <Link to='/profile'><img src={currentUser.profilePicture} alt={currentUser.username}></img></Link> : 
+            currentUser ? <Link to='/profile'><img className="rounded-full overflow-hidden" src={currentUser.profilePicture} alt={currentUser.username}></img></Link> : 
             <nav className="flex gap-2">
             <NavLink to="/login">Login</NavLink>
             <NavLink to="/register">Register</NavLink>
