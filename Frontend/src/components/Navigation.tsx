@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import {  RootState } from "../redux/store";
 import { useSelector } from "react-redux";
 
@@ -13,7 +13,7 @@ const Navigation: React.FC = () => {
             <NavLink to="/">ProfileDB</NavLink>
           </h1>
           {
-            currentUser ? <img src={currentUser.profilePicture} alt={currentUser.username}></img> : 
+            currentUser ? <Link to='/profile'><img src={currentUser.profilePicture} alt={currentUser.username}></img></Link> : 
             <nav className="flex gap-2">
             <NavLink to="/login">Login</NavLink>
             <NavLink to="/register">Register</NavLink>
