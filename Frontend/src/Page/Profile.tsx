@@ -22,19 +22,19 @@ const Profile: React.FC = () => {
       </div>
       <div className="flex flex-col gap-3">
         <section className="flex gap-3 items-center shadow-sm rounded-sm p-2">
-          <figure className="overflow-hidden rounded-full"><img src={currentUser?.profilePicture} alt="" /></figure>
+          <figure className="overflow-hidden max-w-6 aspect-square w-full rounded-full"><img src={currentUser?.profilePicture} alt="" /></figure>
           <h2>{currentUser?.username}</h2>
         </section>
         <section className="flex gap-3 items-center shadow-sm rounded-sm p-2">
-          <figure className="overflow-hidden rounded-full"><img src={currentUser?.profilePicture} alt="" /></figure>
+          <figure className="overflow-hidden max-w-6 aspect-square w-full rounded-full"><img src={currentUser?.profilePicture} alt="" /></figure>
           <h2>{currentUser?.username}</h2>
         </section>
         <section className="flex gap-3 items-center shadow-sm rounded-sm p-2">
-          <figure className="overflow-hidden rounded-full"><img src={currentUser?.profilePicture} alt="" /></figure>
+          <figure className="overflow-hidden max-w-6 aspect-square w-full rounded-full"><img src={currentUser?.profilePicture} alt="" /></figure>
           <h2>{currentUser?.username}</h2>
         </section>
         <section className="flex gap-3 items-center shadow-sm rounded-sm p-2">
-          <figure className="overflow-hidden rounded-full"><img src={currentUser?.profilePicture} alt="" /></figure>
+          <figure className="overflow-hidden max-w-6 aspect-square w-full rounded-full"><img src={currentUser?.profilePicture} alt="" /></figure>
           <h2>{currentUser?.username}</h2>
         </section>
       </div>
