@@ -2,6 +2,7 @@ import User from "../Model/userDetails.model.js";
 import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { errorHandler } from "../Utils/error.js";
+import { createSignToken } from "../Utils/setJwtCookies.js";
 
 // jwt Secret
 
@@ -14,11 +15,12 @@ export const register = async (req, res, next) => {
       return next(errorHandler(401, "Email Exist"));
     }
 
-    await User.create({
+    const newUser = await User.create({
       username: username,
       email,
       password: hashPassword,
     });
+
     res.send({
       status: "Account Register",
     });
