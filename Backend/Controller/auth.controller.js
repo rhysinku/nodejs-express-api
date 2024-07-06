@@ -8,7 +8,7 @@ const JWT_SECRET =
   "pockeypeperoaj==12i3uppupsaudioahsdjnzpkmcdknhbv210312ie9qwusiadjlncshdbasgdcnahsxjkdsadma";
 
 export const register = async (req, res, next) => {
-  const { uname, email, password } = req.body;
+  const { username, email, password } = req.body;
   const hashPassword = bcryptjs.hashSync(password, 10);
   try {
     const emailExist = await User.findOne({ email });
@@ -17,7 +17,7 @@ export const register = async (req, res, next) => {
     }
 
     await User.create({
-      username: uname,
+      username: username,
       email,
       password: hashPassword,
     });
