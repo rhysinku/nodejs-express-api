@@ -1,10 +1,8 @@
 import { Link, NavLink } from 'react-router-dom';
 import { RootState } from '../redux/store';
 import { useSelector } from 'react-redux';
-
 const Navigation: React.FC = () => {
   const { currentUser } = useSelector((state: RootState) => state.user);
-  console.log(currentUser);
   return (
     <>
       <header className="py-3">
