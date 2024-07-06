@@ -33,15 +33,18 @@
   "terminal.integrated.profiles.windows": {
     "Git Bash": {
       "path": ["C:\\Program Files\\Git\\bin\\bash.exe"],
-      "args": ["--login"]
+      "args": ["--login"],
+      "name": "GitHub Bash"
     },
     "PowerShell: Frontend": {
       "path": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
-      "args": ["-NoExit", "-Command", "cd frontend"]
+      "args": ["-NoExit", "-Command", "cd frontend"],
+      "name": "${workspaceFolderBasename} - PowerShell (Frontend)"
     },
     "PowerShell: Backend": {
       "path": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
-      "args": ["-NoExit", "-Command", "cd backend"]
+      "args": ["-NoExit", "-Command", "cd backend"],
+      "name": "${workspaceFolderBasename} - PowerShell (Frontend)"
     }
   }
 }
