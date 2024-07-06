@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface UserState {
   token: string | null;
-  currentuUser: UserData | null;
+  currentUser: UserData | null;
   loading: boolean;
   error: string | boolean;
 }
@@ -18,13 +18,13 @@ interface UserData {
 }
 
 interface AccountTypes {
-  token: string;
-  currentuUser: UserData;
+  token: string | null;
+  currentUser: UserData;
 }
 
 const initialState: UserState = {
   token: null,
-  currentuUser: null,
+  currentUser: null,
   loading: false,
   error: false,
 };
@@ -34,20 +34,21 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     signInStart: (state) => {
-      state.token = null;
-      state.currentuUser = null;
+      state.token = '';
+      state.currentUser = null;
       state.loading = true;
     },
     signInSuccess: (state, action: PayloadAction<AccountTypes>) => {
-      const { token, currentuUser } = action.payload;
+      const { token, currentUser } = action.payload;
+      state.currentUser = currentUser;
       state.token = token;
-      state.currentuUser = currentuUser;
+
       state.loading = false;
       state.error = false;
     },
     signInFailure: (state, action) => {
-      state.token = null;
-      state.currentuUser = null;
+      state.token = '';
+      state.currentUser = null;
       state.loading = false;
       state.error = action.payload;
     },
