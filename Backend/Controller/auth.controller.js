@@ -54,16 +54,18 @@ export const googleAuth = async (req, res, next) => {
     const user = await User.findOne({ email });
 
     if (user) {
-      const accToken = jwt.sign({ id: user.id }, process.env.JWT_SECRET_KEY);
-      const { password, ...rest } = user._doc;
-      const expiryDate = new Date(Date.now() + 35000);
-      return res
-        .cookie("access_token", accToken, {
-          httpOnly: true,
-          expire: expiryDate,
-        })
-        .status(200)
-        .send(rest);
+      createSignToken(user, 200, req, res);
+
+      // const accToken = jwt.sign({ id: user.id }, process.env.JWT_SECRET_KEY);
+      // const { password, ...rest } = user._doc;
+      // const expiryDate = new Date(Date.now() + 35000);
+      // return res
+      //   .cookie("access_token", accToken, {
+      //     httpOnly: true,
+      //     expire: expiryDate,
+      //   })
+      //   .status(200)
+      //   .send(rest);
     } else {
       const generatePassword = Math.random().toString(36).slice(-8);
       const hashPassword = bcryptjs.hashSync(generatePassword, 10);
@@ -80,18 +82,19 @@ export const googleAuth = async (req, res, next) => {
       });
 
       await googleUser.save();
-      const accToken = jwt.sign(
-        { id: googleUser._id },
-        process.env.JWT_SECRET_KEY
-      );
+      createSignToken(googleUser, 200, req, res);
+      // const accToken = jwt.sign(
+      //   { id: googleUser._id },
+      //   process.env.JWT_SECRET_KEY
+      // );
 
-      return res
-        .cookie("access_token", accToken, {
-          httpOnly: true,
-          expire: expiryDate,
-        })
-        .status(200)
-        .send(googleUser);
+      // return res
+      //   .cookie("access_token", accToken, {
+      //     httpOnly: true,
+      //     expire: expiryDate,
+      //   })
+      //   .status(200)
+      //   .send(googleUser);
     }
   } catch (error) {
     return next(errorHandler(401, "Google Auth Failed"));
