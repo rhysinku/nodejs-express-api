@@ -28,5 +28,20 @@
       "quote_style": 0
     },
     "warnings": true
+  },
+  "terminal.integrated.defaultProfile.windows": "Git Bash",
+  "terminal.integrated.profiles.windows": {
+    "Git Bash": {
+      "path": ["C:\\Program Files\\Git\\bin\\bash.exe"],
+      "args": ["--login"]
+    },
+    "PowerShell: Frontend": {
+      "path": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+      "args": ["-NoExit", "-Command", "cd frontend"]
+    },
+    "PowerShell: Backend": {
+      "path": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+      "args": ["-NoExit", "-Command", "cd backend"]
+    }
   }
 }
