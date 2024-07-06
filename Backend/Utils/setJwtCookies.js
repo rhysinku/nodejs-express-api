@@ -8,7 +8,6 @@ const signToken = (id) => {
 
 export const createSignToken = (user, statusCode, req, res) => {
   const token = signToken(user._id);
-  console.log(user._id);
 
   const expiryDate = new Date(Date.now() + 35000);
 

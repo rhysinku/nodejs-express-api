@@ -39,18 +39,7 @@ export const login = async (req, res, next) => {
     }
 
     if (bcryptjs.compareSync(password, user.password)) {
-      const accToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY);
-      const { password, ...rest } = user._doc;
-
-      const expiryDate = new Date(Date.now() + 35000);
-
-      return res
-        .cookie("access_token", accToken, {
-          httpOnly: true,
-          expires: expiryDate,
-        })
-        .status(200)
-        .send(rest);
+      return createSignToken(user, 200, req, res);
     }
     return next(errorHandler(401, "Invalid Wrong Password"));
   } catch (error) {
