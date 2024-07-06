@@ -4,6 +4,7 @@ import cors from "cors";
 import mongoose from "mongoose";
 import userRoute from "./Routes/user.route.js";
 import authRoute from "./Routes/auth.route.js";
+import cookieParser from "cookie-parser";
 
 // Declare Required
 const app = express();
@@ -11,6 +12,7 @@ const app = express();
 // Use Required
 app.use(express.json());
 app.use(cors());
+app.use(cookieParser());
 
 // Mongo Url
 const mongoUrl =

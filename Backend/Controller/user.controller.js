@@ -7,5 +7,6 @@ export const test = (req, res) => {
 export const updateUser = async (req, res, next) => {
   res.send({
     message: "Update",
+    paramid: req.params.id,
   });
 };
