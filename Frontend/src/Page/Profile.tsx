@@ -2,9 +2,9 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 import { useEffect, useRef, useState } from 'react';
 import {
+  getDownloadURL,
   getStorage,
   ref,
-  uploadBytes,
   uploadBytesResumable,
   UploadTaskSnapshot,
 } from 'firebase/storage';
@@ -16,6 +16,8 @@ const Profile: React.FC = () => {
   const { currentUser } = useSelector((state: RootState) => state.user);
   const imageUploadRef = useRef<HTMLInputElement>(null);
   const [imageFile, setImageFile] = useState<File | null>();
+  const [imageUploadProgress, setImageUploadProgress] = useState<number>(0);
+  const [imageUploadError, setImageUploadError] = useState<boolean>(false);
 
   useEffect(() => {
     if (imageFile) {
@@ -29,9 +31,24 @@ const Profile: React.FC = () => {
     const storageRef = ref(storage, fileName);
     const uploadTask = uploadBytesResumable(storageRef, image);
 
-    uploadTask.on('state_changed', (snapshot: UploadTaskSnapshot) => {
-      console.log(snapshot);
-    });
+    uploadTask.on(
+      'state_changed',
+      (snapshot: UploadTaskSnapshot) => {
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        setImageUploadProgress(Math.round(progress));
+        setImageUploadError(false);
+      },
+      () => {
+        setImageUploadError(true);
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          console.log('File available at', downloadURL);
+          setImageUploadError(false);
+        });
+      }
+    );
   };
 
   const handleInputFile = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -49,6 +66,11 @@ const Profile: React.FC = () => {
             <div className="pointer-events-none absolute inset-0 m-auto flex items-center justify-center bg-gray-700 bg-opacity-0 group-hover:bg-opacity-35">
               <FaFileUpload className="text-4xl text-white opacity-0 group-hover:opacity-100" />
             </div>
+
+            <div className="pointer-events-none absolute inset-0 m-auto flex items-center justify-center bg-white bg-opacity-65">
+              <span className="text-3xl font-bold">{imageUploadProgress}%</span>
+            </div>
+
             <form action="">
               <input
                 type="file"
