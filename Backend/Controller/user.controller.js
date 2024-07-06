@@ -4,8 +4,8 @@ export const test = (req, res) => {
   });
 };
 
-export const updateUser = (req, res, next) => {
+export const updateUser = async (req, res, next) => {
   res.send({
-    status: "working",
+    message: "Update",
   });
 };
