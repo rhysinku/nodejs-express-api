@@ -4,8 +4,6 @@ import jwt from "jsonwebtoken";
 import { errorHandler } from "../Utils/error.js";
 
 // jwt Secret
-const JWT_SECRET =
-  "pockeypeperoaj==12i3uppupsaudioahsdjnzpkmcdknhbv210312ie9qwusiadjlncshdbasgdcnahsxjkdsadma";
 
 export const register = async (req, res, next) => {
   const { username, email, password } = req.body;
@@ -39,7 +37,7 @@ export const login = async (req, res, next) => {
     }
 
     if (bcryptjs.compareSync(password, user.password)) {
-      const accToken = jwt.sign({ id: user._id }, JWT_SECRET);
+      const accToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY);
       const { password, ...rest } = user._doc;
 
       const expiryDate = new Date(Date.now() + 35000);
@@ -65,7 +63,7 @@ export const googleAuth = async (req, res, next) => {
     const user = await User.findOne({ email });
 
     if (user) {
-      const accToken = jwt.sign({ id: user.id }, JWT_SECRET);
+      const accToken = jwt.sign({ id: user.id }, process.env.JWT_SECRET_KEY);
       const { password, ...rest } = user._doc;
       const expiryDate = new Date(Date.now() + 35000);
       return res
@@ -91,7 +89,10 @@ export const googleAuth = async (req, res, next) => {
       });
 
       await googleUser.save();
-      const accToken = jwt.sign({ id: googleUser._id }, JWT_SECRET);
+      const accToken = jwt.sign(
+        { id: googleUser._id },
+        process.env.JWT_SECRET_KEY
+      );
 
       return res
         .cookie("access_token", accToken, {
