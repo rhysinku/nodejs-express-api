@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { FaFileUpload } from 'react-icons/fa';
 
@@ -9,13 +9,23 @@ const Profile: React.FC = () => {
   const imageUploadRef = useRef<HTMLInputElement>(null);
   const [imageFile, setImageFile] = useState<File | null>();
 
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  useEffect(() => {
+    if (imageFile) {
+      handleFileUpload(imageFile);
+    }
+  }, [imageFile]);
+
+  const handleFileUpload = async (image: File) => {
+    console.log(image);
+  };
+
+  const handleInputFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       return setImageFile(e.target.files[0]);
     }
-
     return setImageFile(null);
   };
+
   return (
     <div className="container">
       <div className="grid justify-between gap-2">
@@ -30,7 +40,7 @@ const Profile: React.FC = () => {
                 ref={imageUploadRef}
                 accept="image/*"
                 className="hidden"
-                onChange={handleImageUpload}
+                onChange={handleInputFile}
               />
             </form>
             <img
