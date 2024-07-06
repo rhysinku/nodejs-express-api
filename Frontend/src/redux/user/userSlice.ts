@@ -42,7 +42,6 @@ const userSlice = createSlice({
       const { token, currentUser } = action.payload;
       state.currentUser = currentUser;
       state.token = token;
-
       state.loading = false;
       state.error = false;
     },
