@@ -106,3 +106,7 @@ export const googleAuth = async (req, res, next) => {
     return next(errorHandler(401, "Google Auth Failed"));
   }
 };
+
+export const signout = async (req, res, next) => {
+  res.clearCookie("access_token").status(200).json("sign out");
+};
