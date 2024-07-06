@@ -20,8 +20,6 @@ export const createSignToken = (user, statusCode, req, res) => {
   res.status(statusCode).json({
     status: "sucess",
     token,
-    data: {
-      rest,
-    },
+    currentuUser: rest,
   });
 };

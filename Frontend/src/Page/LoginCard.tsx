@@ -1,14 +1,14 @@
-import { ChangeEvent, FormEvent, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { ChangeEvent, FormEvent, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 import {
   signInFailure,
   signInStart,
   signInSuccess,
-} from "../redux/user/userSlice";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../redux/store";
-import GAuth from "../components/GAuth";
+} from '../redux/user/userSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../redux/store';
+import GAuth from '../components/GAuth';
 
 interface LoginDataType {
   email: string;
@@ -17,8 +17,8 @@ interface LoginDataType {
 
 const LoginCard: React.FC = () => {
   const [loginData, setLoginData] = useState<LoginDataType>({
-    email: "",
-    password: "",
+    email: '',
+    password: '',
   });
 
   const { loading, error } = useSelector((state: RootState) => state.user);
@@ -41,11 +41,11 @@ const LoginCard: React.FC = () => {
 
     try {
       dispatch(signInStart());
-      const res = await fetch("http://localhost:1234/api/auth/login", {
-        method: "Post",
+      const res = await fetch('http://localhost:1234/api/auth/login', {
+        method: 'Post',
         headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
         },
         body: JSON.stringify({
           email,
@@ -61,7 +61,7 @@ const LoginCard: React.FC = () => {
       }
 
       dispatch(signInSuccess(data));
-      navigate("/");
+      navigate('/');
     } catch (error) {
       dispatch(signInFailure(error));
     }
@@ -129,13 +129,11 @@ const LoginCard: React.FC = () => {
                 type="submit"
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-                {loading ? "Loading..." : "Submit"}
+                {loading ? 'Loading...' : 'Submit'}
               </button>
             </div>
-            <GAuth/>
+            <GAuth />
             {error && <p className="text-red-500">{error}</p>}
-
-         
           </form>
 
           <p className="mt-10 text-center text-sm text-gray-500">
