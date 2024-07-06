@@ -78,7 +78,7 @@ const Profile: React.FC = () => {
               </form>
               <img
                 className="w-full object-cover"
-                src={currentUser?.profilePicture}
+                src={imageUploadUrl || currentUser?.profilePicture}
                 alt={currentUser?.username}
                 onClick={() => imageUploadRef.current?.click()}
               />
@@ -92,7 +92,7 @@ const Profile: React.FC = () => {
               <div className="hidden"></div>
             ) : (
               <div className="mt-8 w-full">
-                <div className="bg-stroke dark:bg-dark-3 relative h-4 w-full rounded-2xl bg-blue-800">
+                <div className="bg-stroke dark:bg-dark-3 relative h-4 w-full rounded-2xl">
                   <div
                     className="absolute left-0 top-0 flex h-full items-center justify-center rounded-2xl bg-green-500 text-xs font-semibold text-white"
                     style={{
