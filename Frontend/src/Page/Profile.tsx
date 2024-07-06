@@ -1,6 +1,14 @@
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 import { useEffect, useRef, useState } from 'react';
+import {
+  getStorage,
+  ref,
+  uploadBytes,
+  uploadBytesResumable,
+  UploadTaskSnapshot,
+} from 'firebase/storage';
+import { app } from '../firebase';
 
 import { FaFileUpload } from 'react-icons/fa';
 
@@ -16,7 +24,14 @@ const Profile: React.FC = () => {
   }, [imageFile]);
 
   const handleFileUpload = async (image: File) => {
-    console.log(image);
+    const storage = getStorage(app);
+    const fileName = new Date().getTime() + image.name;
+    const storageRef = ref(storage, fileName);
+    const uploadTask = uploadBytesResumable(storageRef, image);
+
+    uploadTask.on('state_changed', (snapshot: UploadTaskSnapshot) => {
+      console.log(snapshot);
+    });
   };
 
   const handleInputFile = (e: React.ChangeEvent<HTMLInputElement>) => {
