@@ -1,6 +1,6 @@
-import { ChangeEvent, FormEvent, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import GAuth from "../components/GAuth";
+import { ChangeEvent, FormEvent, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import GAuth from '../components/GAuth';
 
 interface FormDataType {
   username: string;
@@ -10,14 +10,14 @@ interface FormDataType {
 
 const RegisterCard: React.FC = () => {
   const [formData, setFormData] = useState<FormDataType>({
-    username: "",
-    email: "",
-    password: "",
+    username: '',
+    email: '',
+    password: '',
   });
 
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string>("");
+  const [error, setError] = useState<string>('');
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -32,12 +32,12 @@ const RegisterCard: React.FC = () => {
     setIsLoading(true);
     const { username, email, password } = formData;
 
-    const res = await fetch("http://localhost:1234/api/auth/register", {
-      method: "POST",
+    const res = await fetch('http://localhost:1234/api/auth/register', {
+      method: 'POST',
 
       headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
       },
       body: JSON.stringify({
         uname: username,
@@ -54,14 +54,14 @@ const RegisterCard: React.FC = () => {
       return;
     }
     setIsLoading(false);
-    setError("");
+    setError('');
     setFormData({
-      username: "",
-      email: "",
-      password: "",
+      username: '',
+      email: '',
+      password: '',
     });
 
-    navigate("/login");
+    navigate('/login');
   };
 
   return (
@@ -142,15 +142,15 @@ const RegisterCard: React.FC = () => {
                 type="submit"
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-                {isLoading ? "Loading..." : "Sign Up"}
+                {isLoading ? 'Loading...' : 'Sign Up'}
               </button>
             </div>
-            <GAuth/>
+            <GAuth />
             {error && <p className="text-red-500">{error}</p>}
           </form>
         </div>
-        <p className="text-center mt-2 text-sm text-gray-500">
-          Already have an account?{" "}
+        <p className="mt-2 text-center text-sm text-gray-500">
+          Already have an account?{' '}
           <Link
             to="/login"
             className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"

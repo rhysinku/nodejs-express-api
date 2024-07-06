@@ -18,7 +18,7 @@ const Profile: React.FC = () => {
   const [imageFile, setImageFile] = useState<File | null>();
   const [imageUploadProgress, setImageUploadProgress] = useState<number>(0);
   const [imageUploadError, setImageUploadError] = useState<boolean>(false);
-
+  const [imageUploadUrl, setimageUploadUrl] = useState<string>('');
   useEffect(() => {
     if (imageFile) {
       handleFileUpload(imageFile);
@@ -44,7 +44,7 @@ const Profile: React.FC = () => {
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          console.log('File available at', downloadURL);
+          setimageUploadUrl(downloadURL);
           setImageUploadError(false);
         });
       }
@@ -62,31 +62,50 @@ const Profile: React.FC = () => {
     <div className="container">
       <div className="grid justify-between gap-2">
         <div className="rounded-sm p-5 shadow-lg">
-          <figure className="group relative aspect-square w-32 overflow-hidden rounded-full transition-all">
-            <div className="pointer-events-none absolute inset-0 m-auto flex items-center justify-center bg-gray-700 bg-opacity-0 group-hover:bg-opacity-35">
-              <FaFileUpload className="text-4xl text-white opacity-0 group-hover:opacity-100" />
-            </div>
-
-            <div className="pointer-events-none absolute inset-0 m-auto flex items-center justify-center bg-white bg-opacity-65">
-              <span className="text-3xl font-bold">{imageUploadProgress}%</span>
-            </div>
-
-            <form action="">
-              <input
-                type="file"
-                ref={imageUploadRef}
-                accept="image/*"
-                className="hidden"
-                onChange={handleInputFile}
+          <div className="flex flex-col items-center">
+            <figure className="group relative aspect-square w-32 overflow-hidden rounded-full transition-all">
+              <div className="pointer-events-none absolute inset-0 m-auto flex items-center justify-center bg-gray-700 bg-opacity-0 group-hover:bg-opacity-35">
+                <FaFileUpload className="text-4xl text-white opacity-0 group-hover:opacity-100" />
+              </div>
+              <form action="">
+                <input
+                  type="file"
+                  ref={imageUploadRef}
+                  accept="image/*"
+                  className="hidden"
+                  onChange={handleInputFile}
+                />
+              </form>
+              <img
+                className="w-full object-cover"
+                src={currentUser?.profilePicture}
+                alt={currentUser?.username}
+                onClick={() => imageUploadRef.current?.click()}
               />
-            </form>
-            <img
-              className="w-full object-cover"
-              src={currentUser?.profilePicture}
-              alt={currentUser?.username}
-              onClick={() => imageUploadRef.current?.click()}
-            />
-          </figure>
+            </figure>
+
+            {imageUploadError && (
+              <span className="bg-red-700 font-bold">Error In Uploading</span>
+            )}
+
+            {imageUploadProgress === 0 ? (
+              <div className="hidden"></div>
+            ) : (
+              <div className="mt-8 w-full">
+                <div className="bg-stroke dark:bg-dark-3 relative h-4 w-full rounded-2xl bg-blue-800">
+                  <div
+                    className="absolute left-0 top-0 flex h-full items-center justify-center rounded-2xl bg-green-500 text-xs font-semibold text-white"
+                    style={{
+                      width: `${imageUploadProgress}%`,
+                    }}
+                  >
+                    {imageUploadProgress}%
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+
           <div className="mt-4">
             <div>
               <span>Username: </span>
