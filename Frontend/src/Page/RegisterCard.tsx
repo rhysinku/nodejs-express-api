@@ -32,36 +32,41 @@ const RegisterCard: React.FC = () => {
     setIsLoading(true);
     const { username, email, password } = formData;
 
-    const res = await fetch('http://localhost:1234/api/auth/register', {
-      method: 'POST',
+    try {
+      const res = await fetch('http://localhost:1234/api/auth/register', {
+        method: 'POST',
 
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-      body: JSON.stringify({
-        uname: username,
-        email,
-        password,
-      }),
-    });
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          username,
+          email,
+          password,
+        }),
+      });
 
-    const data = await res.json();
+      const data = await res.json();
 
-    if (data.success === false) {
-      setError(data.message);
+      if (data.success === false) {
+        setError(data.message);
+        setIsLoading(false);
+        return;
+      }
       setIsLoading(false);
-      return;
-    }
-    setIsLoading(false);
-    setError('');
-    setFormData({
-      username: '',
-      email: '',
-      password: '',
-    });
+      setError('');
+      setFormData({
+        username: '',
+        email: '',
+        password: '',
+      });
 
-    navigate('/login');
+      navigate('/login');
+    } catch (error) {
+      setError('An error occurred while registering');
+      setIsLoading(false);
+    }
   };
 
   return (
