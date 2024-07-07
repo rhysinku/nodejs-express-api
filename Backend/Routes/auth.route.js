@@ -3,7 +3,7 @@ import {
   register,
   login,
   googleAuth,
-  signout,
+  signOut,
   verifyUserToken,
 } from "../Controller/auth.controller.js";
 import { verifyJWTToken } from "../Utils/verifyJWTToken.js";
@@ -13,7 +13,7 @@ const router = express.Router();
 router.post("/register", register);
 router.post("/login", login);
 router.post("/google", googleAuth);
-router.get("/signout", signout);
+router.get("/signout", signOut);
 router.get("/protected", verifyJWTToken, verifyUserToken);
 
 export default router;
