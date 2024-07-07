@@ -17,7 +17,7 @@ dotenv.config();
 app.use(express.json());
 app.use(
   cors({
-    origin: process.env.CORS_LIVE_LINK,
+    origin: process.env.CORS_LIVE_LINK || "http://localhost:5173",
     credentials: true,
   })
 );

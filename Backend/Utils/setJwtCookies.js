@@ -14,7 +14,7 @@ export const createSignToken = (user, statusCode, req, res) => {
   res.cookie("access_token", token, {
     expires: expiryDate,
     httpOnly: true,
-    secure: true,
+    secure: false,
     sameSite: "strict",
   });
   const { password, ...rest } = user._doc;
