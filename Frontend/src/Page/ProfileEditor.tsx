@@ -25,7 +25,7 @@ interface UpdateProfileType {
 }
 
 const ProfileEditor: React.FC = () => {
-  const { currentUser, updateLoading } = useSelector(
+  const { currentUser, updateLoading, updateError } = useSelector(
     (state: RootState) => state.user
   );
   const dispatch = useDispatch<AppDispatch>();
@@ -35,7 +35,7 @@ const ProfileEditor: React.FC = () => {
   const [imageUploadProgress, setImageUploadProgress] = useState<number>(0);
   const [imageUploadError, setImageUploadError] = useState<boolean>(false);
   const [profileData, setProfileData] = useState<UpdateProfileType>({});
-
+  const [updateMessage, setUpdateMessage] = useState<string>('');
   useEffect(() => {
     if (imageFile) {
       handleFileUpload(imageFile);
@@ -88,6 +88,7 @@ const ProfileEditor: React.FC = () => {
 
     const { username, email, password, profilePicture } = profileData;
     try {
+      setUpdateMessage('');
       dispatch(updateUserStart());
       const res = await fetch(
         `http://localhost:1234/api/user/update/${currentUser?._id}`,
@@ -108,9 +109,11 @@ const ProfileEditor: React.FC = () => {
       );
 
       const data = await res.json();
+      setUpdateMessage('Profile updated successfully');
       dispatch(updateUserSuccess(data));
     } catch (err) {
       dispatch(updateUserFailed(err));
+      setUpdateMessage('');
       console.log(err);
     }
   };
@@ -215,6 +218,8 @@ const ProfileEditor: React.FC = () => {
             >
               {updateLoading ? 'Updating...' : '   Update Profile'}
             </button>
+            {updateError && <span>{updateError}</span>}
+            {updateMessage && <span>{updateMessage}</span>}
           </div>
         </form>
         <button onClick={getProtectedData}>Get Protected Data</button>
