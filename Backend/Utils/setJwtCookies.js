@@ -13,7 +13,7 @@ export const createSignToken = (user, statusCode, req, res) => {
 
   res.cookie("access_token", token, {
     expires: expiryDate,
-    // httpOnly: true,
+    httpOnly: true,
     secure: true,
     sameSite: "strict",
   });
