@@ -16,7 +16,7 @@ export const verifyJWTToken = (req, res, next) => {
       res.clearCookie("access_token", {
         httpOnly: true,
         secure: true,
-        sameSite: "None",
+        sameSite: "none",
       });
       return next(errorHandler(403, "Invalid Token"));
     }
