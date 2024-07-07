@@ -17,19 +17,22 @@ const GAuth: React.FC = () => {
       const result = await signInWithPopup(auth, provider);
 
       const { displayName, email, photoURL } = result.user;
-      const res = await fetch('http://localhost:1234/api/auth/google', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-        credentials: 'include',
-        body: JSON.stringify({
-          name: displayName,
-          email,
-          photo: photoURL,
-        }),
-      });
+      const res = await fetch(
+        `${import.meta.env.VITE_HOST_API_LINK}/api/auth/google`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
+          credentials: 'include',
+          body: JSON.stringify({
+            name: displayName,
+            email,
+            photo: photoURL,
+          }),
+        }
+      );
       const data = await res.json();
       dispatch(signInSuccess(data));
       navigate('/profile');
