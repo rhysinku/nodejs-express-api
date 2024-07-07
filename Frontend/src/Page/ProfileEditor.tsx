@@ -15,6 +15,7 @@ import {
   updateUserStart,
   updateUserSuccess,
   updateUserFailed,
+  clearUser,
 } from '../redux/user/userSlice';
 
 interface UpdateProfileType {
@@ -147,6 +148,7 @@ const ProfileEditor: React.FC = () => {
       );
 
       const data = await response.json();
+      dispatch(clearUser());
       console.log(data);
     } catch (error) {
       console.log(error);
