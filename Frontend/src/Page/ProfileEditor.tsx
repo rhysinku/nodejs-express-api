@@ -11,6 +11,12 @@ import {
 import { FaFileUpload } from 'react-icons/fa';
 import { app } from '../firebase';
 
+import {
+  updateUserStart,
+  updateUserSuccess,
+  updateUserFailed,
+} from '../redux/user/userSlice';
+
 interface UpdateProfileType {
   username?: string;
   email?: string;
@@ -19,7 +25,9 @@ interface UpdateProfileType {
 }
 
 const ProfileEditor: React.FC = () => {
-  const { currentUser } = useSelector((state: RootState) => state.user);
+  const { currentUser, updateLoading } = useSelector(
+    (state: RootState) => state.user
+  );
   const dispatch = useDispatch<AppDispatch>();
 
   const imageUploadRef = useRef<HTMLInputElement>(null);
@@ -80,6 +88,7 @@ const ProfileEditor: React.FC = () => {
 
     const { username, email, password, profilePicture } = profileData;
     try {
+      dispatch(updateUserStart());
       const res = await fetch(
         `http://localhost:1234/api/user/update/${currentUser?._id}`,
         {
@@ -99,8 +108,9 @@ const ProfileEditor: React.FC = () => {
       );
 
       const data = await res.json();
-      console.log(data);
+      dispatch(updateUserSuccess(data));
     } catch (err) {
+      dispatch(updateUserFailed(err));
       console.log(err);
     }
   };
@@ -203,7 +213,7 @@ const ProfileEditor: React.FC = () => {
               type="submit"
               className="w-full rounded bg-blue-900 py-4 text-white"
             >
-              Update Profile
+              {updateLoading ? 'Updating...' : '   Update Profile'}
             </button>
           </div>
         </form>
