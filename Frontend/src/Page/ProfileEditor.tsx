@@ -93,6 +93,7 @@ const ProfileEditor: React.FC = () => {
             password,
             profilePicture,
           }),
+          credentials: 'include',
         }
       );
 
@@ -100,6 +101,19 @@ const ProfileEditor: React.FC = () => {
       console.log(data);
     } catch (err) {
       console.log(err);
+    }
+  };
+
+  const getProtectedData = async () => {
+    try {
+      const response = await fetch('http://localhost:1234/api/auth/protected', {
+        method: 'GET',
+        credentials: 'include', // This is important to include cookies in the request
+      });
+      const data = await response.json();
+      console.log(data.message);
+    } catch (error) {
+      console.error('Error fetching protected data', error);
     }
   };
 
@@ -192,6 +206,7 @@ const ProfileEditor: React.FC = () => {
             </button>
           </div>
         </form>
+        <button onClick={getProtectedData}>Get Protected Data</button>
       </div>
     </div>
   );

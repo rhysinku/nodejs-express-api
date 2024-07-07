@@ -8,7 +8,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../redux/store';
 import GAuth from '../components/GAuth';
-import Cookies from 'js-cookie';
+
 interface LoginDataType {
   email: string;
   password: string;
@@ -46,10 +46,12 @@ const LoginCard: React.FC = () => {
           'Content-Type': 'application/json',
           Accept: 'application/json',
         },
+
         body: JSON.stringify({
           email,
           password,
         }),
+        credentials: 'include',
       });
 
       const data = await res.json();
@@ -58,10 +60,6 @@ const LoginCard: React.FC = () => {
         dispatch(signInFailure(data.message));
         return;
       }
-      const useAccessToken = data.token;
-      Cookies.set('access_token', useAccessToken, {
-        expires: new Date(Date.now() + 100 * 24 * 60 * 60 * 1000),
-      });
 
       dispatch(signInSuccess(data));
       navigate('/');

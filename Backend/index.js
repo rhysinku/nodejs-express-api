@@ -15,22 +15,17 @@ const app = express();
 dotenv.config();
 
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
 app.use(cookieParser());
-
-// Mongo Url
-const mongoUrl =
-  "mongodb+srv://rhysindodev:eOR1HJsCqGsWzVO7@cluster0.mqk2f9r.mongodb.net/mern-auth?retryWrites=true&w=majority&appName=Cluster0";
-
-// Import Model
-// require("./Model/userDetails");
-
-// Declare Model
-// const User = mongoose.model("UserDetails");
 
 // Monggo Connection
 mongoose
-  .connect(mongoUrl)
+  .connect(process.env.MONGO_URL)
   .then(() => {
     console.log("Mongo Connected From Server");
   })

@@ -1,49 +1,52 @@
-import { FormEvent } from "react";
-import { GoogleAuthProvider, signInWithPopup ,getAuth } from "firebase/auth"
-import { app } from "../firebase";
-import { useDispatch } from "react-redux";
-import { signInSuccess } from "../redux/user/userSlice";
-import { useNavigate } from "react-router-dom";
+import { FormEvent } from 'react';
+import { GoogleAuthProvider, signInWithPopup, getAuth } from 'firebase/auth';
+import { app } from '../firebase';
+import { useDispatch } from 'react-redux';
+import { signInSuccess } from '../redux/user/userSlice';
+import { useNavigate } from 'react-router-dom';
 
-const  GAuth:React.FC = () => {
+const GAuth: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleGoogleClick = async(e:FormEvent<HTMLButtonElement>)=>{
+  const handleGoogleClick = async (e: FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    try{
+    try {
       const provider = new GoogleAuthProvider();
-      const auth = getAuth(app)
+      const auth = getAuth(app);
       const result = await signInWithPopup(auth, provider);
-   
 
-      const { displayName, email, photoURL } = result.user
+      const { displayName, email, photoURL } = result.user;
       const res = await fetch('http://localhost:1234/api/auth/google', {
         method: 'POST',
-        headers:{
-          'Content-Type' : 'application/json',
-          Accept: "application/json",
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
         },
+        credentials: 'include',
         body: JSON.stringify({
-          name : displayName,
+          name: displayName,
           email,
-          photo : photoURL
-        })
-      })
-      const data = await res.json()
-      dispatch(signInSuccess(data))
-      navigate('/profile')
-    }catch(error){ 
-      console.log(error)
+          photo: photoURL,
+        }),
+      });
+      const data = await res.json();
+      dispatch(signInSuccess(data));
+      navigate('/profile');
+    } catch (error) {
+      console.log(error);
     }
-  }
-
+  };
 
   return (
-    <button onClick={handleGoogleClick} type="button" className="text-center bg-red-600 text-white w-full py-3 block rounded-sm hover:bg-red-400">
-       Continue With Google 
+    <button
+      onClick={handleGoogleClick}
+      type="button"
+      className="block w-full rounded-sm bg-red-600 py-3 text-center text-white hover:bg-red-400"
+    >
+      Continue With Google
     </button>
-  )
-} 
+  );
+};
 
-export default GAuth
+export default GAuth;

@@ -5,7 +5,10 @@ export const verifyJWTToken = (req, res, next) => {
   const token = req.cookies.access_token;
 
   if (!token) {
-    return next(errorHandler(401, "Please Login First"));
+    return res.send({
+      token: req.cookies,
+      message: "You are not authenticated",
+    });
   }
 
   jwt.verify(token, process.env.JWT_SECRET_KEY, (err, user) => {
@@ -14,6 +17,21 @@ export const verifyJWTToken = (req, res, next) => {
     }
 
     req.user = user;
+    next();
+  });
+};
+
+export const verifyToken = (req, res, next) => {
+  const token = req.cookies.access_token;
+  if (!token) {
+    return res.status(403).json({ message: "No token provided" });
+  }
+
+  jwt.verify(token, process.env.JWT_SECRET_KEY, (err, decoded) => {
+    if (err) {
+      return res.status(500).json({ message: "Failed to authenticate token" });
+    }
+    req.user = decoded;
     next();
   });
 };

@@ -9,11 +9,13 @@ const signToken = (id) => {
 export const createSignToken = (user, statusCode, req, res) => {
   const token = signToken(user._id);
 
-  const expiryDate = new Date(Date.now() + 35000);
+  const expiryDate = new Date(Date.now() + 5 * 60 * 60 * 1000);
 
   res.cookie("access_token", token, {
     expires: expiryDate,
     httpOnly: true,
+    secure: false,
+    sameSite: "strict",
   });
   const { password, ...rest } = user._doc;
 
