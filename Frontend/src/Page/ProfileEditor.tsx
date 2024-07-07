@@ -109,6 +109,7 @@ const ProfileEditor: React.FC = () => {
       );
 
       const data = await res.json();
+      console.log(data);
       setUpdateMessage('Profile updated successfully');
       dispatch(updateUserSuccess(data));
     } catch (err) {
@@ -133,14 +134,17 @@ const ProfileEditor: React.FC = () => {
 
   const handleDeleteAccount = async () => {
     try {
-      const response = await fetch('http://localhost:1234/api/user/delete', {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-          accept: 'application/json',
-        },
-        credentials: 'include',
-      });
+      const response = await fetch(
+        `http://localhost:1234/api/user/delete/${currentUser?._id}`,
+        {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+            accept: 'application/json',
+          },
+          credentials: 'include',
+        }
+      );
 
       const data = await response.json();
       console.log(data);

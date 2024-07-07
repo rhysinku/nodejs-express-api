@@ -44,6 +44,11 @@ export const deleteUser = async (req, res, next) => {
   }
   try {
     await User.findByIdAndDelete(req.params.id);
+    res.clearCookie("access_token", {
+      httpOnly: true,
+      sameSite: "strict",
+      secure: false,
+    });
     res.status(200).json("User deleted successfully");
   } catch (error) {
     next(errorHandler(500, error.message));
