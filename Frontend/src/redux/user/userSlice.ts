@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface UserState {
-  token: string | null;
   currentUser: UserData | null;
   loading: boolean;
   error: string | boolean;
@@ -20,12 +19,10 @@ interface UserData {
 }
 
 interface AccountTypes {
-  token: string | null;
   currentUser: UserData;
 }
 
 const initialState: UserState = {
-  token: null,
   currentUser: null,
   loading: false,
   error: false,
@@ -38,19 +35,16 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     signInStart: (state) => {
-      state.token = '';
       state.currentUser = null;
       state.loading = true;
     },
     signInSuccess: (state, action: PayloadAction<AccountTypes>) => {
-      const { token, currentUser } = action.payload;
+      const { currentUser } = action.payload;
       state.currentUser = currentUser;
-      state.token = token;
       state.loading = false;
       state.error = false;
     },
     signInFailure: (state, action) => {
-      state.token = '';
       state.currentUser = null;
       state.loading = false;
       state.error = action.payload;
