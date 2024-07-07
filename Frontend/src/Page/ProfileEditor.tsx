@@ -92,7 +92,7 @@ const ProfileEditor: React.FC = () => {
       setUpdateMessage('');
       dispatch(updateUserStart());
       const res = await fetch(
-        `http://localhost:1234/api/user/update/${currentUser?._id}`,
+        `${import.meta.env.VITE_HOST_API_LINK}/api/user/update/${currentUser?._id}`,
         {
           method: 'POST',
           headers: {
@@ -122,10 +122,13 @@ const ProfileEditor: React.FC = () => {
 
   const getProtectedData = async () => {
     try {
-      const response = await fetch('http://localhost:1234/api/auth/protected', {
-        method: 'GET',
-        credentials: 'include', // This is important to include cookies in the request
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_HOST_API_LINK}/api/auth/protected`,
+        {
+          method: 'GET',
+          credentials: 'include', // This is important to include cookies in the request
+        }
+      );
       const data = await response.json();
       console.log(data.message);
     } catch (error) {
@@ -136,7 +139,7 @@ const ProfileEditor: React.FC = () => {
   const handleDeleteAccount = async () => {
     try {
       const response = await fetch(
-        `http://localhost:1234/api/user/delete/${currentUser?._id}`,
+        `${import.meta.env.VITE_HOST_API_LINK}/api/user/delete/${currentUser?._id}`,
         {
           method: 'DELETE',
           headers: {
@@ -157,10 +160,13 @@ const ProfileEditor: React.FC = () => {
 
   const handleSignOutAccount = async () => {
     try {
-      const response = await fetch('http://localhost:1234/api/auth/signout', {
-        method: 'GET',
-        credentials: 'include',
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_HOST_API_LINK}/api/auth/signout`,
+        {
+          method: 'GET',
+          credentials: 'include',
+        }
+      );
       const data = await response.json();
       console.log(data);
       dispatch(clearUser());

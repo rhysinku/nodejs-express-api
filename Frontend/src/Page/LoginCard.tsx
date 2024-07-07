@@ -40,19 +40,22 @@ const LoginCard: React.FC = () => {
 
     try {
       dispatch(signInStart());
-      const res = await fetch('http://localhost:1234/api/auth/login', {
-        method: 'Post',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
+      const res = await fetch(
+        `${import.meta.env.VITE_HOST_API_LINK}/api/auth/login`,
+        {
+          method: 'Post',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
 
-        body: JSON.stringify({
-          email,
-          password,
-        }),
-        credentials: 'include',
-      });
+          body: JSON.stringify({
+            email,
+            password,
+          }),
+          credentials: 'include',
+        }
+      );
 
       const data = await res.json();
 
