@@ -222,7 +222,21 @@ const ProfileEditor: React.FC = () => {
             {updateMessage && <span>{updateMessage}</span>}
           </div>
         </form>
-        <button onClick={getProtectedData}>Get Protected Data</button>
+        <div className="flex justify-between gap-1">
+          <button className="rounded-sm bg-orange-700 p-2 text-center font-bold text-white">
+            Delete Account
+          </button>
+          <button
+            className="rounded-sm bg-violet-700 p-2 text-center font-bold text-white"
+            onClick={getProtectedData}
+          >
+            Get Protected Data
+          </button>
+
+          <button className="rounded-sm bg-red-700 p-2 text-center font-bold text-white">
+            Logout
+          </button>
+        </div>
       </div>
     </div>
   );
