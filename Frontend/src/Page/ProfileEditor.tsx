@@ -1,5 +1,5 @@
-import { useSelector } from 'react-redux';
-import { RootState } from '../redux/store';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState, AppDispatch } from '../redux/store';
 import { ChangeEvent, useEffect, useRef, useState, FormEvent } from 'react';
 import {
   getDownloadURL,
@@ -20,6 +20,7 @@ interface UpdateProfileType {
 
 const ProfileEditor: React.FC = () => {
   const { currentUser } = useSelector((state: RootState) => state.user);
+  const dispatch = useDispatch<AppDispatch>();
 
   const imageUploadRef = useRef<HTMLInputElement>(null);
   const [imageFile, setImageFile] = useState<File | null>();

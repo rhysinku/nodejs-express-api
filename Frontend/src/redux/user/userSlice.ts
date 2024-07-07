@@ -5,6 +5,8 @@ interface UserState {
   currentUser: UserData | null;
   loading: boolean;
   error: string | boolean;
+  updateLoading: boolean;
+  updateError: string | null;
 }
 
 interface UserData {
@@ -27,6 +29,8 @@ const initialState: UserState = {
   currentUser: null,
   loading: false,
   error: false,
+  updateLoading: false,
+  updateError: null,
 };
 
 const userSlice = createSlice({
@@ -50,6 +54,20 @@ const userSlice = createSlice({
       state.currentUser = null;
       state.loading = false;
       state.error = action.payload;
+    },
+    updateUserStart: (state) => {
+      state.updateLoading = true;
+      state.updateError = null;
+    },
+    updateUserSuccess: (state, action: PayloadAction<AccountTypes>) => {
+      const { currentUser } = action.payload;
+      state.currentUser = currentUser;
+      state.updateLoading = false;
+      state.updateError = null;
+    },
+    updateUserFailed: (state, action) => {
+      state.updateLoading = false;
+      state.updateError = action.payload;
     },
   },
 });

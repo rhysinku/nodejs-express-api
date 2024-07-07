@@ -13,6 +13,11 @@ export const verifyJWTToken = (req, res, next) => {
 
   jwt.verify(token, process.env.JWT_SECRET_KEY, (err, user) => {
     if (err) {
+      res.clearCookie("access_token", {
+        httpOnly: true,
+        sameSite: "strict",
+        secure: false,
+      });
       return next(errorHandler(403, "Invalid Token"));
     }
 
