@@ -155,6 +155,19 @@ const ProfileEditor: React.FC = () => {
     }
   };
 
+  const handleSignOutAccount = async () => {
+    try {
+      const response = await fetch('http://localhost:1234/api/auth/signout', {
+        method: 'GET',
+        credentials: 'include',
+      });
+      const data = await response.json();
+      console.log(data);
+      dispatch(clearUser());
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div className="container">
       <div className="mx-auto flex w-5/6 max-w-5xl flex-col gap-2 p-3 shadow-sm">
@@ -260,7 +273,10 @@ const ProfileEditor: React.FC = () => {
             Get Protected Data
           </button>
 
-          <button className="rounded-sm bg-red-700 p-2 text-center font-bold text-white hover:bg-red-400">
+          <button
+            onClick={handleSignOutAccount}
+            className="rounded-sm bg-red-700 p-2 text-center font-bold text-white hover:bg-red-400"
+          >
             Logout
           </button>
         </div>
