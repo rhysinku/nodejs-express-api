@@ -131,6 +131,24 @@ const ProfileEditor: React.FC = () => {
     }
   };
 
+  const handleDeleteAccount = async () => {
+    try {
+      const response = await fetch('http://localhost:1234/api/user/delete', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          accept: 'application/json',
+        },
+        credentials: 'include',
+      });
+
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="container">
       <div className="mx-auto flex w-5/6 max-w-5xl flex-col gap-2 p-3 shadow-sm">
@@ -223,7 +241,10 @@ const ProfileEditor: React.FC = () => {
           </div>
         </form>
         <div className="flex justify-between gap-1">
-          <button className="rounded-sm bg-orange-700 p-2 text-center font-bold text-white hover:bg-orange-400">
+          <button
+            onClick={handleDeleteAccount}
+            className="rounded-sm bg-orange-700 p-2 text-center font-bold text-white hover:bg-orange-400"
+          >
             Delete Account
           </button>
           <button
