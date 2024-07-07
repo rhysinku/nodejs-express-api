@@ -37,7 +37,6 @@ const RegisterCard: React.FC = () => {
         `${import.meta.env.VITE_HOST_API_LINK}/api/auth/register`,
         {
           method: 'POST',
-
           headers: {
             'Content-Type': 'application/json',
             Accept: 'application/json',

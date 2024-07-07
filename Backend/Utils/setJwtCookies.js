@@ -15,7 +15,7 @@ export const createSignToken = (user, statusCode, req, res) => {
     expires: expiryDate,
     httpOnly: true,
     secure: true,
-    sameSite: "strict",
+    sameSite: "Lax",
   });
   const { password, ...rest } = user._doc;
 
