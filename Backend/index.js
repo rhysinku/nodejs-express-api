@@ -17,7 +17,7 @@ dotenv.config();
 app.use(express.json());
 app.use(
   cors({
-    origin: "https://nodejs-express-react.vercel.app",
+    origin: process.env.CORS_LIVE_LINK,
     credentials: true,
   })
 );
