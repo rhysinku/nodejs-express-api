@@ -15,7 +15,10 @@ const app = express();
 dotenv.config();
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin: 'https://nodejs-express-react.vercel.app',
+  credentials: true, 
+}));
 app.use(cookieParser());
 
 // Monggo Connection
