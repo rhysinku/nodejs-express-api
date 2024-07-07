@@ -27,8 +27,9 @@ mongoose
   .catch((e) => console.log(e));
 
 // Express Listen if Running
-app.listen(1234, () => {
-  console.log("Server is started: Port: 1234");
+const port = process.env.PORT || 1234;
+app.listen(port, () => {
+  console.log(`Server is started: Port: ${port}`);
 });
 
 app.use("/api/user", userRoute);
