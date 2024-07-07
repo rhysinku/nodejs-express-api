@@ -33,19 +33,22 @@ const RegisterCard: React.FC = () => {
     const { username, email, password } = formData;
 
     try {
-      const res = await fetch('http://localhost:1234/api/auth/register', {
-        method: 'POST',
+      const res = await fetch(
+        `${import.meta.env.VITE_HOST_API_LINK}/api/auth/register`,
+        {
+          method: 'POST',
 
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-        body: JSON.stringify({
-          username,
-          email,
-          password,
-        }),
-      });
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
+          body: JSON.stringify({
+            username,
+            email,
+            password,
+          }),
+        }
+      );
 
       const data = await res.json();
 
