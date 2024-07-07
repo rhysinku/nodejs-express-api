@@ -214,7 +214,7 @@ const ProfileEditor: React.FC = () => {
             </div>
             <button
               type="submit"
-              className="w-full rounded bg-blue-900 py-4 text-white"
+              className="w-full rounded bg-blue-900 py-4 text-white hover:bg-blue-400"
             >
               {updateLoading ? 'Updating...' : '   Update Profile'}
             </button>
@@ -223,17 +223,17 @@ const ProfileEditor: React.FC = () => {
           </div>
         </form>
         <div className="flex justify-between gap-1">
-          <button className="rounded-sm bg-orange-700 p-2 text-center font-bold text-white">
+          <button className="rounded-sm bg-orange-700 p-2 text-center font-bold text-white hover:bg-orange-400">
             Delete Account
           </button>
           <button
-            className="rounded-sm bg-violet-700 p-2 text-center font-bold text-white"
+            className="rounded-sm bg-violet-700 p-2 text-center font-bold text-white hover:bg-violet-400"
             onClick={getProtectedData}
           >
             Get Protected Data
           </button>
 
-          <button className="rounded-sm bg-red-700 p-2 text-center font-bold text-white">
+          <button className="rounded-sm bg-red-700 p-2 text-center font-bold text-white hover:bg-red-400">
             Logout
           </button>
         </div>
