@@ -15,12 +15,7 @@ const app = express();
 dotenv.config();
 
 app.use(express.json());
-app.use(
-  cors({
-    origin: process.env.CORS_LIVE_LINK,
-    credentials: true,
-  })
-);
+app.use(cors());
 app.use(cookieParser());
 
 // Monggo Connection
